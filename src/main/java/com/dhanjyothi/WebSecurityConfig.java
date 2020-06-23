@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registerCustomer/save**").permitAll()
                 .antMatchers("/home/index").permitAll()
                 .antMatchers("/ajax/**").permitAll()
+                .antMatchers("/h2console/**").permitAll()
                 .antMatchers("/customer/customerList**").hasAnyAuthority("M")
                 .antMatchers("/customer/activateCustomer**").hasAnyAuthority("M")
                 .antMatchers("/customer/confirmCustomer**").hasAnyAuthority("M")
