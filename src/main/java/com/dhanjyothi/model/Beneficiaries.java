@@ -44,7 +44,7 @@ public class Beneficiaries {
     @Column(name = "ben_bank_IFSC", length = 11, nullable = false)
     private long benBankIFSC;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "acct_id")
     private Account owner;
 }
