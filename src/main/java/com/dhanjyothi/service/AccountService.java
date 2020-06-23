@@ -32,9 +32,9 @@ public interface AccountService {
 
     void saveBeneficiaries(Account account, Beneficiaries beneficiaries) throws Exception;
 
-    boolean checkAccountExists(Beneficiaries beneficiaries) throws Exception;
+    int checkAccountExists(long acctId) throws Exception;
 
-    List<Beneficiaries> getAllBeneficiaries(int accountId) throws Exception;
+    List<Beneficiaries> getAllBeneficiaries(long accountId);
 
     void updateFromAccount(Account account, long transAmt, Transaction transaction) throws Exception;
 
@@ -42,12 +42,12 @@ public interface AccountService {
 
     List<Transaction> loadAllTransactions(int accId) throws Exception;
 
-    public List<Transaction> loadTransactionsBetweenStandEnDt(String startDate, String endDate)throws Exception;
+    public List<Transaction> loadTransactionsBetweenStandEnDt(String startDate, String endDate) throws Exception;
 
     boolean isUserNameExists(String name) throws Exception;
 
-    Account checkAccountExists(int accountId) throws Exception;
-
+//    Account checkAccountExists(int accountId) throws Exception;
     User getUserById(int userId) throws Exception;
 
+    void addBeneficiary(Beneficiaries beneficiaries);
 }

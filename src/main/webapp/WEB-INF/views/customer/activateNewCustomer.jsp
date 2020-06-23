@@ -11,7 +11,7 @@
     <body>
         <!-- START PAGE CONTAINER -->
         <div class="page-navigation-toggled page-container-wide">
-             <%@include file="../common/topbar.jsp" %>
+            <%@include file="../common/topbar.jsp" %>
             <!-- PAGE CONTENT -->
             <div class="page-content">
                 <!-- START BREADCRUMB -->

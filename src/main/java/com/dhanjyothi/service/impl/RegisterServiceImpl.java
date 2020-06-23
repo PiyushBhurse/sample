@@ -8,12 +8,12 @@ import com.dhanjyothi.service.RegisterService;
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
-	public void saveRegister(User customer) {
+    public void saveRegister(User customer) {
 
-	}
+    }
 
-	public List<User> getAllUsers() {
-		return null;
-	}
+    public List<User> getAllUsers() {
+        return null;
+    }
 
 }

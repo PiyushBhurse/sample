@@ -25,5 +25,5 @@ public interface LoginDao extends JpaRepository<User, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE User u set u.userStatus=:userStatus WHERE u.userId=:userId")
-    public void updateCustomerUserStatus(@Param("userId")long userId,@Param("userStatus") char userStatus);
+    public void updateCustomerUserStatus(@Param("userId") long userId, @Param("userStatus") char userStatus);
 }

@@ -31,7 +31,7 @@ public class DhanjyothiApplication extends SpringBootServletInitializer {
     @Bean(name = "messageSource")
     public ResourceBundleMessageSource resourceBundleMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename( "labels");
+        messageSource.setBasename("labels");
         return messageSource;
     }
 }

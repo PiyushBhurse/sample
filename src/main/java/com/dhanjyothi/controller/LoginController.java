@@ -50,9 +50,9 @@ public class LoginController {
 
     @RequestMapping(value = "/home/index")
     public String indexPage(HttpServletRequest request) {
-        CustomUserDetails name = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Collection<? extends GrantedAuthority> authorities = ((CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
-        return (authorities.contains(new SimpleGrantedAuthority("C")))?"redirect:../account/accountSummary":"redirect:../customer/customerList";
+        CustomUserDetails name = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Collection<? extends GrantedAuthority> authorities = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
+        return (authorities.contains(new SimpleGrantedAuthority("C"))) ? "redirect:../account/accountSummary" : "redirect:../customer/customerList";
     }
 
 }

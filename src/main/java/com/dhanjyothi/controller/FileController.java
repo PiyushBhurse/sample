@@ -14,31 +14,31 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FileController {
 
-	@GetMapping("/showuploadpage")
-	public ModelAndView showUploadPage() {
+    @GetMapping("/showuploadpage")
+    public ModelAndView showUploadPage() {
 
-		return new ModelAndView("");
-	}
+        return new ModelAndView("");
+    }
 
-	@PostMapping(value = "/doUpload")
-	public ModelAndView saveFileUpload(HttpServletRequest request, @RequestParam CommonsMultipartFile[] fileUpload)
-			throws Exception {
+    @PostMapping(value = "/doUpload")
+    public ModelAndView saveFileUpload(HttpServletRequest request, @RequestParam CommonsMultipartFile[] fileUpload)
+            throws Exception {
 
-		return new ModelAndView("");
-	}
+        return new ModelAndView("");
+    }
 
-	@GetMapping("/viewall")
-	public ModelAndView viewAllFiles() {
+    @GetMapping("/viewall")
+    public ModelAndView viewAllFiles() {
 
-		return new ModelAndView("");
-	}
+        return new ModelAndView("");
+    }
 
-	@GetMapping("/doDownload/{fileName}")
-	public ModelAndView downloadFile(@PathVariable("fileName") String fileName, HttpServletResponse response)
-			throws IOException {
+    @GetMapping("/doDownload/{fileName}")
+    public ModelAndView downloadFile(@PathVariable("fileName") String fileName, HttpServletResponse response)
+            throws IOException {
 
-		return new ModelAndView("");
+        return new ModelAndView("");
 
-	}
+    }
 
 }

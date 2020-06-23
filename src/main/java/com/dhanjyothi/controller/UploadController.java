@@ -19,7 +19,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController 
+@RestController
 public class UploadController {
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)

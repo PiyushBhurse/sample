@@ -1,6 +1,7 @@
 package com.dhanjyothi.service.impl;
 
 import com.dhanjyothi.dao.AccountDao;
+import com.dhanjyothi.dao.BeneficiaryDao;
 import com.dhanjyothi.dao.KYCDao;
 import com.dhanjyothi.dao.LoginDao;
 import com.dhanjyothi.dao.TransactionDao;
@@ -18,9 +19,12 @@ import com.dhanjyothi.util.GlobalConstants;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Example;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
@@ -34,6 +38,8 @@ public class AccountServiceImpl implements AccountService {
     private AccountDao accountDao;
     @Autowired
     private TransactionDao transactionDao;
+    @Autowired
+    private BeneficiaryDao beneficiaryDao;
 
     @Value("kyc.document.location")
     String saveLocation;
@@ -116,12 +122,24 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
-    public boolean checkAccountExists(Beneficiaries beneficiaries) throws Exception {
-        return true;
+    @Override
+    public int checkAccountExists(long benAcctId) throws Exception {
+        User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        Account savingAccount = this.getAccountDetails(user.getUserId(), "S").get(0);
+        if (savingAccount != null && benAcctId == savingAccount.getAcctId()) {
+            return 1;//checking for self account
+        }
+        List<Beneficiaries> allBeneficiaries = getAllBeneficiaries(savingAccount.getAcctId());
+        if (allBeneficiaries.stream().anyMatch(b -> b.getBenAccNum() == benAcctId)) {
+            return 2;//beneficiary already added
+        }
+        return this.accountDao.existsByAcctIdAndAcctType(benAcctId, 'S') ? 3 : 4;//3:account exists|4:account not exists
     }
 
-    public List<Beneficiaries> getAllBeneficiaries(int accountId) throws Exception {
-        return null;
+    @Override
+    public List<Beneficiaries> getAllBeneficiaries(long accountId) {
+        List<Beneficiaries> beneficiaryListforAccount = this.beneficiaryDao.getBeneficiaryListforAccount(accountId);
+        return beneficiaryListforAccount.stream().distinct().collect(Collectors.toList());
     }
 
     public void updateFromAccount(Account account, long transAmt, Transaction transaction) throws Exception {
@@ -155,11 +173,10 @@ public class AccountServiceImpl implements AccountService {
         return true;
     }
 
-    public Account checkAccountExists(int accountId) throws Exception {
-        return null;
-
-    }
-
+//    public Account checkAccountExists(int accountId) throws Exception {
+//        return null;
+//
+//    }
     public User getUserById(int userId) throws Exception {
         return null;
     }
@@ -173,4 +190,20 @@ public class AccountServiceImpl implements AccountService {
         List<User> filteredList = allUserList.stream().filter(u -> u.getUserStatus() == userStatus).collect(Collectors.toList());
         return filteredList.stream().distinct().collect(Collectors.toList());
     }
+
+    @Override
+    public void addBeneficiary(Beneficiaries beneficiaries) {
+        try {
+            User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+            Account savingAccount = this.getAccountDetails(user.getUserId(), "S").get(0);
+            beneficiaries.setOwner(savingAccount);
+            System.out.println("dao>>" + beneficiaries);
+            Beneficiaries save = this.beneficiaryDao.save(beneficiaries);
+            System.out.println("save>>" + save);
+        } catch (Exception ex) {
+            Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+    }
+
 }

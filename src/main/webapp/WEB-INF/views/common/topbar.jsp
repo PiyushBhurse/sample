@@ -63,19 +63,19 @@
 <!-- START X-NAVIGATION VERTICAL -->
 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
     <li class="xn-titleText">
-    <spring:message code="appName"/> &nbsp;&nbsp;&nbsp;</span>
-</li>
-<!-- SIGN OUT -->
-<li class="pull-right">
-    <a href="#" class="mb-control" onclick="formSubmit()">Logout <span class="fa fa-sign-out"></span></a>                        
-</li> 
-<li class="pull-right"  style="margin-top: 1%;margin-left: 15px;">
-    <span class="mb-control" style="color: white;text-align:center;font-size: medium;">&nbsp;|</span>
-</li> 
-<li class="pull-right" style="margin-top: 1%;">
-    <span class="mb-control" style="color: white;text-align:center;font-size: medium;"> Welcome ${curUser.user.firstName} ${curUser.user.lastName}</span>       
-</li> 
-<!-- END SIGN OUT -->
+        <spring:message code="appName"/> &nbsp;&nbsp;&nbsp;</span>
+    </li>
+    <!-- SIGN OUT -->
+    <li class="pull-right">
+        <a href="#" class="mb-control" onclick="formSubmit()">Logout <span class="fa fa-sign-out"></span></a>                        
+    </li> 
+    <li class="pull-right"  style="margin-top: 1%;margin-left: 15px;">
+        <span class="mb-control" style="color: white;text-align:center;font-size: medium;">&nbsp;|</span>
+    </li> 
+    <li class="pull-right" style="margin-top: 1%;">
+        <span class="mb-control" style="color: white;text-align:center;font-size: medium;"> Welcome ${curUser.user.firstName} ${curUser.user.lastName}</span>       
+    </li> 
+    <!-- END SIGN OUT -->
 </ul>
 <!-- END X-NAVIGATION VERTICAL --> 
 <div class="navbar">

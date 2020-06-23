@@ -26,11 +26,11 @@
  *     currency: "$,£,¢"
  *  }
  */
-$.validator.addMethod("currency", function(value, element, param) {
+$.validator.addMethod("currency", function (value, element, param) {
     var isParamString = typeof param === "string",
-        symbol = isParamString ? param : param[0],
-        soft = isParamString ? true : param[1],
-        regex;
+            symbol = isParamString ? param : param[0],
+            soft = isParamString ? true : param[1],
+            regex;
 
     symbol = symbol.replace(/,/g, "");
     symbol = soft ? symbol + "]" : symbol + "]?";

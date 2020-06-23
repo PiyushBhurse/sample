@@ -81,8 +81,8 @@ public class User {
     private String pan;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = KYC.class,fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = KYC.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
 //    @JsonIgnore
     private List<KYC> kycData;
 

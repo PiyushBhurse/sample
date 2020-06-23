@@ -62,14 +62,12 @@ public class Account {
     @Column(name = "acct_status", columnDefinition = "CHAR(1) NOT NULL COMMENT 'A = Active, I = Inactive'")
     private char acctStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Transaction.class,fetch = FetchType.EAGER)
-    @JoinColumn(name = "acct_id",referencedColumnName = "acct_id")
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Transaction.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "acct_id", referencedColumnName = "acct_id")
     private List<Transaction> transactions;
 
     public Account() {
-    this.transactions=new LinkedList<>();
+        this.transactions = new LinkedList<>();
     }
-    
-    
-}
 
+}

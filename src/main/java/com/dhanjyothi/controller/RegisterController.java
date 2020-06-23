@@ -72,7 +72,7 @@ public class RegisterController {
     @RequestMapping(value = "/customer/confirmCustomer", method = RequestMethod.POST)
     public String activateCustomer(HttpServletRequest request, ModelMap model) {
         long userId = ServletRequestUtils.getLongParameter(request, "userId", 0);
-        String active = ServletRequestUtils.getStringParameter(request, "active", ""); 
+        String active = ServletRequestUtils.getStringParameter(request, "active", "");
         this.loginService.updateCustomerUserStatus(userId, active.charAt(0));
         return "redirect:../customer/customerList";
     }

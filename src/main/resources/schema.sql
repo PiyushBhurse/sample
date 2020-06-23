@@ -46,14 +46,14 @@ CREATE TABLE if not exists `account` (
   KEY `FKdxpgjy70eb9djfmftc3v4qpsf` (`acct_holder_id`)
 );
 
-CREATE  TABLE if not exists `beneficiaries` (
+CREATE TABLE if not exists `beneficiaries` (
   `ben_id` bigint(20) NOT NULL,
   `ben_acc_num` bigint(20) NOT NULL,
-  `ben_bank` bigint(20) NOT NULL,
-  `ben_bank_ifsc` bigint(20) NOT NULL,
+  `ben_bank` varchar(100) NOT NULL,
+  `ben_bank_ifsc` varchar(11) NOT NULL,
   `ben_name` varchar(100) NOT NULL,
   `ben_nick_name` varchar(100) NOT NULL,
-  `user_status` char(1) NOT NULL COMMENT 'I = Internal, E = External',
+  `ben_type` char(1) NOT NULL COMMENT 'I = Internal, E = External',
   `acct_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`ben_id`),
   KEY `FKkr06fei63a7jgtwovsolp3m91` (`acct_id`)

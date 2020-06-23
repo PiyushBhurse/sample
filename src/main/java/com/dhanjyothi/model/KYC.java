@@ -31,7 +31,6 @@ public class KYC {
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")
 //    private User user;
-
     @Column(name = "kyc_type", columnDefinition = "CHAR(1) NOT NULL COMMENT 'B = Date of Birth, A = Proof of Addess D=AADHAR, P = PAN'")
     private char kycType;
 
@@ -40,7 +39,7 @@ public class KYC {
 
     @Column(name = "document_loc", length = 255, nullable = false)
     private String documentLoc;
-    
+
     @Transient
     private MultipartFile file;
 

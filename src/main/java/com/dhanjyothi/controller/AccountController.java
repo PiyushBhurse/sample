@@ -87,12 +87,14 @@ public class AccountController {
         model.addAttribute("tenure", DhanJyothiUtil.getTenureDetails());
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
+        model.addAttribute("beneficiary", new Beneficiaries());
         return "account/beneficiaryAndTransfer";
     }
 
     @RequestMapping(value = "addBeneficiary", method = RequestMethod.POST)
     public String addBeneficiary(@ModelAttribute("beneficiary") Beneficiaries beneficiaries, HttpServletRequest request) {
-        return "redirect:../account/accountSummary";
+        this.accountService.addBeneficiary(beneficiaries);
+        return "redirect:../account/beneficiaryAndTransfer?msg=Benificiary Added Successfully";
     }
 
     @RequestMapping(value = "fundTransfer", method = RequestMethod.POST)

@@ -45,7 +45,7 @@ public class AjaxController {
     }
 
     @GetMapping("/getAccountTransactions")
-    public List<Transaction> getAccountTransaction(HttpServletRequest request)throws Exception{
+    public List<Transaction> getAccountTransaction(HttpServletRequest request) throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
         String startDate = simpleDateFormat.format(date);
@@ -53,6 +53,25 @@ public class AjaxController {
         String stDt = ServletRequestUtils.getStringParameter(request, "startDate", startDate);
         String spDt = ServletRequestUtils.getStringParameter(request, "endDate", endDate);
         return this.accountService.loadTransactionsBetweenStandEnDt(stDt, spDt);
+    }
+
+    @GetMapping("/checkIfAccountExist")
+    public String checkIfAccountExist(HttpServletRequest request) throws Exception {
+        long acctId = ServletRequestUtils.getLongParameter(request, "acctId", 0);
+        int checkAccountExists = this.accountService.checkAccountExists(acctId);
+        System.out.println("check>" + checkAccountExists);
+        switch (checkAccountExists) {
+            case 1:
+                return "You can't transfer funds to self";
+            case 2:
+                return "Beneficiary already added";
+            case 3:
+                return "";
+            case 4:
+                return "Invalid account no";
+            default:
+                return "";
+        }
     }
 
 }
