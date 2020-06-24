@@ -50,4 +50,6 @@ public interface AccountService {
     User getUserById(int userId) throws Exception;
 
     void addBeneficiary(Beneficiaries beneficiaries);
+
+    List<Beneficiaries> getAllBeneficiariesForAccount();
 }

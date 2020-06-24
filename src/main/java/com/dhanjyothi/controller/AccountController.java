@@ -88,6 +88,7 @@ public class AccountController {
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         model.addAttribute("beneficiary", new Beneficiaries());
+        model.addAttribute("beneficiaryList", this.accountService.getAllBeneficiariesForAccount());
         return "account/beneficiaryAndTransfer";
     }
 

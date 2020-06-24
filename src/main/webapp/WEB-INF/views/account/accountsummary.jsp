@@ -185,7 +185,7 @@
                                                             </div>
                                                         </div><br/>
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-success"><spring:message code="button.Submit"/></button>
+                                                            <button type="submit" id="termSubmitBtn" class="btn btn-success"><spring:message code="button.Submit"/></button>
                                                             <button type="button" class="btn btn-primary" data-dismiss="modal"><spring:message code="button.Close"/></button>
                                                         </div>
                                                     </form:form>
@@ -280,6 +280,7 @@
                                                                 $('#form2').prop('action', '../customer/activateCustomer');
                                                                 $('#form2').submit();
                                                             });
+                                                            $(".depAmt").change();
                                                             $(".depAmt").change(function () {
                                                                 var depAmount = $("#depositeAmount").val();
                                                                 var tenure = $("#depositeTenure").val();
@@ -289,18 +290,22 @@
                                                                         if (depAmount > actualBal) {
                                                                             $("#depAmtMsg").text("You have insufficient account balance");
                                                                             $("#depAmtMsg").show();
+                                                                            $("#termSubmitBtn").prop('disabled', true);
                                                                         } else {
                                                                             getIntValueAndMaturityAmt(depAmount, tenure)
                                                                             $("#depAmtMsg").hide();
+                                                                            $("#termSubmitBtn").prop('disabled', false);
                                                                         }
                                                                     } else {
                                                                         $("#depAmtMsg").text("Please enter amount between 1000 and 1,00,00,000");
                                                                         $("#depAmtMsg").show();
+                                                                        $("#termSubmitBtn").prop('disabled', true);
                                                                     }
 
                                                                 } else {
                                                                     $("#depAmtMsg").text("Please enter amount between 1000 and 1,00,00,000");
                                                                     $("#depAmtMsg").show();
+                                                                    $("#termSubmitBtn").prop('disabled', true);
                                                                 }
                                                             });
                                                             function getIntValueAndMaturityAmt(depAmt, tenure) {

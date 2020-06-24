@@ -173,10 +173,6 @@ public class AccountServiceImpl implements AccountService {
         return true;
     }
 
-//    public Account checkAccountExists(int accountId) throws Exception {
-//        return null;
-//
-//    }
     public User getUserById(int userId) throws Exception {
         return null;
     }
@@ -204,6 +200,20 @@ public class AccountServiceImpl implements AccountService {
             Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Beneficiaries> getAllBeneficiariesForAccount() {
+        try {
+            User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+            Account savingAccount = this.getAccountDetails(user.getUserId(), "S").get(0);
+            List<Beneficiaries> beneficiaryListforAccount = this.beneficiaryDao.getBeneficiaryListforAccount(savingAccount.getAcctId());
+            return beneficiaryListforAccount.stream().distinct().collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }
