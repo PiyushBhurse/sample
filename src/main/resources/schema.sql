@@ -10,7 +10,7 @@ CREATE TABLE if not exists `user` (
   `last_name` varchar(100) NOT NULL,
   `mobile_number` varchar(10) NOT NULL,
   `pan` varchar(10) DEFAULT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `pin` int(11) NOT NULL,
   `state` varchar(50) NOT NULL,
   `user_role` char(1) NOT NULL COMMENT 'C = Customer,M = Manager',

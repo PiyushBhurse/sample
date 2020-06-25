@@ -6,50 +6,37 @@ import java.util.Map;
 
 import com.dhanjyothi.model.Account;
 import com.dhanjyothi.model.Beneficiaries;
+import com.dhanjyothi.model.ServiceRequest;
 import com.dhanjyothi.model.Transaction;
 import com.dhanjyothi.model.User;
 
 public interface AccountService {
 
-    User getUserDetails(User user) throws Exception;
+    public List<User> getUserList(char userStatus);
 
-    List<User> getUserList(char userStatus);
+    public List<Account> getAccountDetails(long userId, String accountType) throws Exception;
 
-    List<Account> getAccountDetails(long userId, String accountType) throws Exception;
+    public void openSavingsAccount(User user) throws Exception;
 
-    void openSavingsAccount(User user) throws Exception;
+    public void openTermAccount(Account account, User user) throws Exception;
 
-    void openTermAccount(Account account, User user) throws Exception;
+    public int checkAccountExists(long acctId) throws Exception;
 
-    List<Account> getTermAccountDetails(int userId, String accountType)
-            throws Exception;
+    public List<Beneficiaries> getAllBeneficiaries(long accountId);
 
-    Map<Integer, String> getTenureDetails();
-
-    boolean checkSavingsAccBalance(long termAmt) throws Exception;
-
-    void updateSavingsAccount(Account account, User user) throws Exception;
-
-    void saveBeneficiaries(Account account, Beneficiaries beneficiaries) throws Exception;
-
-    int checkAccountExists(long acctId) throws Exception;
-
-    List<Beneficiaries> getAllBeneficiaries(long accountId);
-
-    void updateFromAccount(Account account, long transAmt, Transaction transaction) throws Exception;
-
-    void updateToAccount(Transaction transaction) throws Exception;
-
-    List<Transaction> loadAllTransactions(int accId) throws Exception;
+    public List<Transaction> loadAllTransactions(int accId) throws Exception;
 
     public List<Transaction> loadTransactionsBetweenStandEnDt(String startDate, String endDate) throws Exception;
 
-    boolean isUserNameExists(String name) throws Exception;
+    public boolean isUserNameExists(String name) throws Exception;
 
-//    Account checkAccountExists(int accountId) throws Exception;
-    User getUserById(int userId) throws Exception;
+    public void addBeneficiary(Beneficiaries beneficiaries);
 
-    void addBeneficiary(Beneficiaries beneficiaries);
+    public Account getAccountByAccountId(long accountId);
+    
+    public List<Beneficiaries> getAllBeneficiariesForAccount();
 
-    List<Beneficiaries> getAllBeneficiariesForAccount();
+    public void transferFundsToBeneficiary(Transaction transaction);
+
+    public void saveServiceRequest(ServiceRequest serviceRequest);
 }

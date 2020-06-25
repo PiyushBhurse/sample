@@ -14,4 +14,6 @@ public interface AccountDao extends JpaRepository<Account, Long> {
 
     boolean existsByAcctIdAndAcctType(long acctId, char acctType);
 
+    public Account getAccountByAcctId(long accountId);
+
 }

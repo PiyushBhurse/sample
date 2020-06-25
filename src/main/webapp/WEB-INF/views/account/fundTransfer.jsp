@@ -17,7 +17,7 @@
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Account Summary</a></li>
+                    <li><a href="#">Fund Transfer</a></li>
                 </ul>
                 <!-- END BREADCRUMB --> 
                 <div class="page-content-wrap" >
@@ -27,92 +27,66 @@
                         <div class="col-md-12">
                             <div class="panel panel-default" style="background: #ffffffde!important;">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Saving Account Details</h3>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-refresh" onclick="location.reload();"><span class="fa fa-refresh" style="margin-top: 26%;"></span></a></li>
-                                    </ul>
+                                    <h3 class="panel-title">Transfer Funds</h3>
                                 </div>
 
                                 <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-12 scrollable">
-                                            <table class="table datatable table-bordered" >
-                                                <thead>
-                                                    <tr>
-                                                        <th>Account No</th>
-                                                        <th>Account Type</th>
-                                                        <th>Balance</th>
-                                                        <th>Created Date</th>
-                                                        <th>Last Updated date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <%--<c:forEach items="${savingAccount}" var="sa">--%>
-                                                    <tr>
-                                                        <td>${savingAccount.acctId}</td>
-                                                        <td>${savingAccount.acctType}</td>
-                                                        <td>${savingAccount.acctBalance}</td>
-                                                        <td><fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${savingAccount.accountCreatedDate}"/></td>
-                                                        <td><fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${savingAccount.accountUpdatedDate}"/></td>
-                                                    </tr>
-                                                    <%--</c:forEach>--%>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+
+                                    <form:form cssClass="form-horizontal" action="../account/fundTransfer?${_csrf.parameterName}=${_csrf.token}" method="post" modelAttribute="fundTransaction" name="formx" id="formx">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row" style="margin-top: 1%;margin-left: 15%">
+                                                    <div class="col-md-11">
+                                                        <div class="form-group">
+                                                            <label class="req col-md-2 control-label">Beneficiary</label>
+                                                            <div class="col-md-7 col-xs-12">
+                                                                <form:select path="beneficiaries" cssClass="form-control select"> 
+                                                                    <c:forEach items="${beneficiaryList}" var="benificiary">
+                                                                        <option value="${benificiary.benId}">${benificiary.benNickName}&nbsp;(${benificiary.benAccNum} - ${benificiary.benName})</option>
+                                                                    </c:forEach>
+                                                                </form:select>
+                                                                <form:hidden path="tranType" value="Debit"/>    
+                                                                <span id="depAmtMsg" style="color: red;display: none;"></span>
+                                                                <span class="help-block">Please select beneficiary</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><br/>
+                                                <div class="row" style="margin-top: 1%;margin-left: 15%">
+                                                    <div class="col-md-11">
+                                                        <div class="form-group">
+                                                            <label class="req col-md-2 control-label">Notes</label>
+                                                            <div class="col-md-7 col-xs-12">
+                                                                <form:input path="tranDesc" maxlength="100" cssClass="form-control"/>    
+                                                                <span class="help-block">Please enter notes for transaction</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><br/>
+                                                <div class="row" style="margin-top: 1%;margin-left: 15%">
+                                                    <div class="col-md-11">
+                                                        <div class="form-group">
+                                                            <label class="req col-md-2 control-label">Transaction Amount</label>
+                                                            <div class="col-md-7 col-xs-12">
+                                                                <form:input path="tranAmt" maxlength="100" cssClass="form-control" />                                       
+                                                                <span id="depAmtMsg" style="color: red;display: none;"></span>
+                                                                <span class="help-block">Please enter transaction amount</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><br/>
+                                        <div class="modal-footer">
+                                            <button type="submit" id="termSubmitBtn" class="btn btn-success"><spring:message code="button.Submit"/></button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><spring:message code="button.Close"/></button>
+                                        </div> 
+                                    </form:form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default" style="background: #ffffffde!important;">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Term Account Details</h3>
-                                    <ul class="panel-controls">
-                                        <li><a href="#" class="panel-refresh" onclick="location.reload();"><span class="fa fa-refresh" style="margin-top: 26%;"></span></a></li>
-                                    </ul>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-12 scrollable">
-                                            <table class="table datatable table-bordered" >
-                                                <thead>
-                                                    <tr>
-                                                        <th>Account No</th>
-                                                        <th>Account Type</th>
-                                                        <th>Term Amount</th>
-                                                        <th>Tenure</th>
-                                                        <th>Interest</th>
-                                                        <th>Maturity Amount</th>
-                                                        <th>Created Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${termAccount}" var="ta">
-                                                        <tr>
-                                                            <td>${ta.acctId}</td>
-                                                            <td>${ta.acctType}</td>
-                                                            <td>${ta.depositeAmount}</td>
-                                                            <td>${ta.depositeTenure}</td>
-                                                            <td>${ta.intRate}</td>
-                                                            <td>${ta.maturityAmt}</td>
-                                                            <td><fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ta.accountCreatedDate}"/></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><br>
-                <form name="form2" id="form2" action="" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <input type="hidden" id="userId" name="userId"/>
-                </form>
+                </div>
                 <!-- END PAGE TITLE -->
                 <!-- start of modal -->
                 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
@@ -126,69 +100,70 @@
                                 <div style="width: 100%;" id="termFormDiv">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <form:form cssClass="form-horizontal" action="../account/createTermAccount?${_csrf.parameterName}=${_csrf.token}" method="post" modelAttribute="account" name="form1" id="form1">
-                                                <!--Customer details-->
-                                                <div class="panel panel-default" style="margin-top: 1%;">
-                                                    <div class="panel-heading">
-                                                        <h3 class="panel-title"><b><i>Basic Details</i></b></h3>
-                                                    </div>
-
-                                                    <div class="row" style="margin-top: 8%">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label class="req col-md-4 control-label">Deposite Amount</label>
-                                                                <div class="col-md-7 col-xs-12">
-                                                                    <form:input path="depositeAmount" cssClass="form-control number depAmt" value="1000"/>
-                                                                    <form:hidden path="acctStatus" value="A"/>
-                                                                    <form:hidden path="acctType" value="T"/>
-                                                                    <span id="depAmtMsg" style="color: red;display: none;"></span>
-                                                                    <span class="help-block">Please enter deposite amount</span>
-                                                                </div>
-                                                            </div>
+                                            <form 
+                                                <form:form cssClass="form-horizontal" action="../account/createTermAccount?${_csrf.parameterName}=${_csrf.token}" method="post" modelAttribute="account" name="depForm" id="depForm">
+                                                    <!--Customer details-->
+                                                    <div class="panel panel-default" style="margin-top: 1%;">
+                                                        <div class="panel-heading">
+                                                            <h3 class="panel-title"><b><i>Basic Details</i></b></h3>
                                                         </div>
 
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label class="req col-md-4 control-label">Deposite Tenure</label>
-                                                                <div class="col-md-7 col-xs-12">
-                                                                    <form:select path="depositeTenure" cssClass="form-control select depAmt"> 
-                                                                        <c:forEach items="${tenure}" var="map">
-                                                                            <option value="${map.key}">${map.value}</option>
-                                                                        </c:forEach>
-                                                                    </form:select>
-                                                                    <span class="help-block">Please select deposite tenure</span>
+                                                        <div class="row" style="margin-top: 8%">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="req col-md-4 control-label">Deposite Amount</label>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <form:input path="depositeAmount" cssClass="form-control number depAmt" value="1000"/>
+                                                                        <form:hidden path="acctStatus" value="A"/>
+                                                                        <form:hidden path="acctType" value="T"/>
+                                                                        <span id="depAmtMsg" style="color: red;display: none;"></span>
+                                                                        <span class="help-block">Please enter deposite amount</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div><br/>
 
-                                                    <div class="row"  id="intrestMaturityDiv" style="display: none;">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label class="req col-md-4 control-label">Interest rate</label>
-                                                                <div class="col-md-7 col-xs-12">
-                                                                    <form:input path="intRate" readonly="true" cssClass="form-control"/>
-                                                                    <span class="help-block">Interest rate calculated based on your deposite tenure and amt</span>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="req col-md-4 control-label">Deposite Tenure</label>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <form:select path="depositeTenure" cssClass="form-control select depAmt"> 
+                                                                            <c:forEach items="${tenure}" var="map">
+                                                                                <option value="${map.key}">${map.value}</option>
+                                                                            </c:forEach>
+                                                                        </form:select>
+                                                                        <span class="help-block">Please select deposite tenure</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div><br/>
 
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label class="req col-md-4 control-label">Maturity Amount</label>
-                                                                <div class="col-md-7 col-xs-12">
-                                                                    <form:input path="maturityAmt" readonly="true" cssClass="form-control"/>
-                                                                    <span class="help-block">Maturity amount calculated based on your deposite tenure and amt</span>
+                                                        <div class="row"  id="intrestMaturityDiv" style="display: none;">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="req col-md-4 control-label">Interest rate</label>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <form:input path="intRate" readonly="true" cssClass="form-control"/>
+                                                                        <span class="help-block">Interest rate calculated based on your deposite tenure and amt</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="req col-md-4 control-label">Maturity Amount</label>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <form:input path="maturityAmt" readonly="true" cssClass="form-control"/>
+                                                                        <span class="help-block">Maturity amount calculated based on your deposite tenure and amt</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div><br/>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" id="termSubmitBtn" class="btn btn-success"><spring:message code="button.Submit"/></button>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><spring:message code="button.Close"/></button>
                                                         </div>
-                                                    </div><br/>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" id="termSubmitBtn" class="btn btn-success"><spring:message code="button.Submit"/></button>
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal"><spring:message code="button.Close"/></button>
-                                                    </div>
-                                                </form:form>
-                                            </div>
+                                                    </form:form>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +185,7 @@
                                     <!-- START FILTER PANEL -->
                                     <div class="panel panel-warning">
                                         <div class="panel-body">
-                                            <form name="tranForm" id="tranForm">
+                                            <form name="tranForm" id="transForm">
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <div class="form-group">
@@ -232,7 +207,6 @@
                                         </div>
                                     </div>
                                     <!-- END FILTER PANEL -->
-
                                     <div class="row">
                                         <div class="col-md-12 scrollable">
                                             <table class="table table-bordered" id="transTable">
@@ -247,7 +221,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="transtablebody">
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -270,16 +243,60 @@
         <script type="text/javascript" src="../js/jquery/jquery-dateformat.min.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
         <script type="text/javascript">
+                                                            $("#submitBtn").prop('disabled', true);
+                                                            $(".datepicker").datepicker({format: 'dd-mm-yyyy', autoclose: true});
                                                             $('.table').dataTable({
                                                                 "order": []
                                                             });
-                                                            $(".datepicker").datepicker({format: 'dd-mm-yyyy', autoclose: true});
-                                                            $('#user td').click(function () {
-                                                                $('#userId').val($(this).parent().data("user-id"));
-                                                                $('#form2').prop('action', '../home/activateCustomer');
-                                                                $('#form2').submit();
+                                                            $(".benCk").change();
+                                                            $(".benCk").change(function () {
+                                                                $.ajax({
+                                                                    data: ({
+                                                                        'acctId': $("#benAccNum").val()
+                                                                    }),
+                                                                    url: "../ajax/checkIfAccountExist",
+                                                                    dataType: "text",
+                                                                    success: function (json) {
+                                                                        if (json != null) {
+                                                                            if (json == '') {
+                                                                                $("#acctSpan").hide();
+                                                                                $("#acctSpan").text('')
+                                                                                $("#submitBtn").prop('disabled', false);
+                                                                            } else {
+                                                                                $("#acctSpan").text(json);
+                                                                                $("#acctSpan").show();
+                                                                                $("#submitBtn").prop('disabled', true);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                });
                                                             });
-                                                            $(".depAmt").change();
+
+                                                            var jvalidate = $("#formx").validate({
+                                                                ignore: [],
+                                                                rules: {
+                                                                    beneficiaries: {
+                                                                        required: true
+                                                                    },
+                                                                    tranDesc: {
+                                                                        minlength: 2,
+                                                                        required: true
+                                                                    },
+                                                                    tranAmt: {
+                                                                        required: true,
+                                                                        number:true
+                                                                    }
+                                                                },
+                                                                errorPlacement: function (error, element) {
+                                                                    if (element.hasClass('select')) {
+                                                                        error.insertAfter(element.next(".bootstrap-select"));
+                                                                        element.next("div").addClass("error");
+                                                                    } else {
+                                                                        error.insertAfter(element);
+                                                                    }
+                                                                }
+                                                            });
+
                                                             $(".depAmt").change(function () {
                                                                 var depAmount = $("#depositeAmount").val();
                                                                 var tenure = $("#depositeTenure").val();
@@ -327,7 +344,7 @@
                                                                 });
                                                             }
 
-                                                            var jvalidate = $("#form1").validate({
+                                                            var jvalidate = $("#transForm").validate({
                                                                 ignore: [],
                                                                 rules: {
                                                                     depositeAmount: {
@@ -364,7 +381,7 @@
                                                                 });
                                                             }
 
-                                                            var jvalidate = $("#form1").validate({
+                                                            var jvalidate = $("#depForm").validate({
                                                                 ignore: [],
                                                                 rules: {
                                                                     depositeAmount: {

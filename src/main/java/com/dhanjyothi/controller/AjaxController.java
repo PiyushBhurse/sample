@@ -20,17 +20,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author hp
- */
 @RestController
 @RequestMapping("/ajax")
 public class AjaxController {
 
     @Autowired
     private AccountService accountService;
-//    
 
     @GetMapping("/calculateInterestAndMatAmount")
     public Map<String, Object> calculateInterestAndMatAmount(HttpServletRequest request) {
@@ -53,6 +48,12 @@ public class AjaxController {
         String stDt = ServletRequestUtils.getStringParameter(request, "startDate", startDate);
         String spDt = ServletRequestUtils.getStringParameter(request, "endDate", endDate);
         return this.accountService.loadTransactionsBetweenStandEnDt(stDt, spDt);
+    }
+
+    @GetMapping("/isUserNameExists")
+    public boolean isUserNameExists(HttpServletRequest request) throws Exception {
+        String username = ServletRequestUtils.getStringParameter(request, "username", "");
+        return this.accountService.isUserNameExists(username);
     }
 
     @GetMapping("/checkIfAccountExist")

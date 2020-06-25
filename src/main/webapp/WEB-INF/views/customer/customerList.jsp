@@ -45,6 +45,7 @@
                                                                 <option value="U" <c:if test="${userStatus=='U'}">selected</c:if>>-All-</option>
                                                                 <option value="N" <c:if test="${userStatus=='N'}">selected</c:if>>New</option>
                                                                 <option value="A" <c:if test="${userStatus=='A'}">selected</c:if>>Active</option>
+                                                                <option value="D" <c:if test="${userStatus=='D'}">selected</c:if>>Inactive</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -77,7 +78,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <c:forEach items="${userList}" var="userItem">
-                                                        <tr id="user" data-user-id="${userItem.userId}" class="clickableRow">
+                                                        <tr id="user" data-user-id="${userItem.userId}" class="clickableRow <c:if test="${userItem.userStatus eq 'D'.charAt(0)}" >danger</c:if>">
                                                             <td><c:out value="${userItem.firstName}"/></td>
                                                             <td><c:out value="${userItem.lastName}"/></td>
                                                             <td><c:out value="${userItem.username}"/></td>
@@ -122,7 +123,7 @@
 
                                             $('#user td').click(function () {
                                                 $('#userId').val($(this).parent().data("user-id"));
-                                                $('#form2').prop('action', '../customer/activateCustomer');
+                                                $('#form2').prop('action', '../home/activateCustomer');
                                                 $('#form2').submit();
                                             });
         </script>

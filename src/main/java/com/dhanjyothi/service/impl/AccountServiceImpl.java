@@ -4,12 +4,13 @@ import com.dhanjyothi.dao.AccountDao;
 import com.dhanjyothi.dao.BeneficiaryDao;
 import com.dhanjyothi.dao.KYCDao;
 import com.dhanjyothi.dao.LoginDao;
+import com.dhanjyothi.dao.ServiceRequestDao;
 import com.dhanjyothi.dao.TransactionDao;
 import java.util.List;
-import java.util.Map;
 import org.springframework.stereotype.Service;
 import com.dhanjyothi.model.Account;
 import com.dhanjyothi.model.Beneficiaries;
+import com.dhanjyothi.model.ServiceRequest;
 import com.dhanjyothi.model.Transaction;
 import com.dhanjyothi.model.User;
 import com.dhanjyothi.security.config.CustomUserDetails;
@@ -19,13 +20,14 @@ import com.dhanjyothi.util.GlobalConstants;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Example;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -40,15 +42,19 @@ public class AccountServiceImpl implements AccountService {
     private TransactionDao transactionDao;
     @Autowired
     private BeneficiaryDao beneficiaryDao;
+    @Autowired
+    private ServiceRequestDao serviceRequestDao;
 
     @Value("kyc.document.location")
     String saveLocation;
 
+    @Override
     public List<Account> getAccountDetails(long userId, String accountType) throws Exception {
         List<Account> accountListByUserId = this.accountDao.getAccountListByUserId(userId);
         return accountListByUserId.stream().distinct().filter(a -> a.getAcctType() == accountType.charAt(0)).collect(Collectors.toList());
     }
 
+    @Override
     public void openSavingsAccount(User user) throws Exception {
         Date currentDate = DhanJyothiUtil.getCurrentDate();
         Account savingAccount = new Account();
@@ -68,17 +74,7 @@ public class AccountServiceImpl implements AccountService {
         Account savedAccount = this.accountDao.save(savingAccount);
     }
 
-    public void saveTransaction(long accountId, double amt, String transDesc, String transType, Beneficiaries beneficiarie) {
-        Date currentDate = DhanJyothiUtil.getCurrentDate();
-        Transaction accountTransaction = new Transaction();
-        accountTransaction.setTranAmt(amt);
-        accountTransaction.setTranDesc(transDesc);
-        accountTransaction.setTranType(transType);
-        accountTransaction.setTranDtTime(currentDate);
-        accountTransaction.setBeneficiaries(beneficiarie);
-        this.transactionDao.save(accountTransaction);
-    }
-
+    @Override
     public void openTermAccount(Account termAccount, User user) throws Exception {
         Date currentDate = DhanJyothiUtil.getCurrentDate();
         termAccount.setAcctHolder(user);
@@ -96,30 +92,6 @@ public class AccountServiceImpl implements AccountService {
         savingAccountTransaction.setTranDtTime(currentDate);
         savingAccount.getTransactions().add(savingAccountTransaction);
         Account savedAccount = this.accountDao.save(savingAccount);
-    }
-
-    public List<Account> getTermAccountDetails(int userId, String accountType) throws Exception {
-        return null;
-    }
-
-    public Map<Integer, String> getTenureDetails() {
-        return null;
-    }
-
-    public boolean checkSavingsAccBalance(long termAmt) throws Exception {
-        return true;
-    }
-
-    public void updateSavingsAccount(Account account, User cust) throws Exception {
-
-    }
-
-    public User getUserDetails(User user) throws Exception {
-        return null;
-    }
-
-    public void saveBeneficiaries(Account account, Beneficiaries beneficiaries) throws Exception {
-
     }
 
     @Override
@@ -142,14 +114,6 @@ public class AccountServiceImpl implements AccountService {
         return beneficiaryListforAccount.stream().distinct().collect(Collectors.toList());
     }
 
-    public void updateFromAccount(Account account, long transAmt, Transaction transaction) throws Exception {
-
-    }
-
-    public void updateToAccount(Transaction transaction) throws Exception {
-
-    }
-
     @Override
     public List<Transaction> loadAllTransactions(int accId) throws Exception {
         return null;
@@ -169,12 +133,9 @@ public class AccountServiceImpl implements AccountService {
                 .collect(Collectors.toList());//collect elements in a list
     }
 
+    @Override
     public boolean isUserNameExists(String name) throws Exception {
-        return true;
-    }
-
-    public User getUserById(int userId) throws Exception {
-        return null;
+        return this.loginDao.existsByUsername(name);
     }
 
     @Override
@@ -193,9 +154,7 @@ public class AccountServiceImpl implements AccountService {
             User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
             Account savingAccount = this.getAccountDetails(user.getUserId(), "S").get(0);
             beneficiaries.setOwner(savingAccount);
-            System.out.println("dao>>" + beneficiaries);
             Beneficiaries save = this.beneficiaryDao.save(beneficiaries);
-            System.out.println("save>>" + save);
         } catch (Exception ex) {
             Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
@@ -213,7 +172,62 @@ public class AccountServiceImpl implements AccountService {
             e.printStackTrace();
             return null;
         }
-
     }
 
+    @Override
+    @Transactional
+    public void transferFundsToBeneficiary(Transaction transaction) {
+        try {
+            Date currentDate = DhanJyothiUtil.getCurrentDate();
+            User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+            Account savingAccount = this.getAccountDetails(user.getUserId(), "S").get(0);
+            savingAccount.setAcctBalance(savingAccount.getAcctBalance() - transaction.getTranAmt());
+
+            transaction.setTranDtTime(currentDate);
+            savingAccount.getTransactions().add(transaction);
+            Account savedAccount = this.accountDao.save(savingAccount);
+
+            Account beneficiaryAccount = this.getAccountByAccountId(transaction.getBeneficiaries().getBenAccNum());
+            beneficiaryAccount.setAcctBalance(beneficiaryAccount.getAcctBalance() + transaction.getTranAmt());
+            Transaction beneficiaryAccountTransaction = transaction;
+            beneficiaryAccountTransaction.setTranDesc(beneficiaryAccountTransaction.getTranDesc() + "/ transfered by account#" + savingAccount.getAcctId());
+            beneficiaryAccountTransaction.setTranType("Credit");
+            beneficiaryAccountTransaction.setTranDtTime(currentDate);
+            beneficiaryAccountTransaction.setBeneficiaries(null);
+            beneficiaryAccount.getTransactions().add(beneficiaryAccountTransaction);
+            this.accountDao.save(beneficiaryAccount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveServiceRequest(ServiceRequest serviceRequest) {
+        try {
+            Map<Integer, String> chequeRequestList = DhanJyothiUtil.getChequeRequestList();
+            int chequeRequestCharges = chequeRequestList.entrySet().stream().filter(entry -> entry.getValue().equals(serviceRequest.getReqDesc())).map(Map.Entry::getKey).findFirst().get();
+            Date currentDate = DhanJyothiUtil.getCurrentDate();
+            User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+            Account savingAccount = this.getAccountDetails(user.getUserId(), "S").get(0);
+            savingAccount.setAcctBalance(savingAccount.getAcctBalance() - chequeRequestCharges);
+
+            Transaction serviceRequestTransaction = new Transaction();
+            serviceRequestTransaction.setTranAmt(chequeRequestCharges);
+            serviceRequestTransaction.setTranDesc("Cheque Request of " + serviceRequest.getReqDesc());
+            serviceRequestTransaction.setTranType("Debit");
+            serviceRequestTransaction.setTranDtTime(currentDate);
+            savingAccount.getTransactions().add(serviceRequestTransaction);
+            Account savedAccount = this.accountDao.save(savingAccount);
+
+            serviceRequest.setOwner(savedAccount);
+            this.serviceRequestDao.save(serviceRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Account getAccountByAccountId(long accountId) {
+        return this.accountDao.getAccountByAcctId(accountId);
+    }
 }

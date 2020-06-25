@@ -42,7 +42,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">First Name</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="firstName" maxlength="100" cssClass="form-control"/>                                       
+                                                        <form:input path="firstName" maxlength="100" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter first name</span>
                                                     </div>
                                                 </div>
@@ -52,7 +52,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Last Name</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="lastName" maxlength="100" cssClass="form-control"/>                                       
+                                                        <form:input path="lastName" maxlength="100" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter last name</span>
                                                     </div>
                                                 </div>
@@ -65,7 +65,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Username</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="username" maxlength="100" cssClass="form-control"/>                                       
+                                                        <form:input path="username" maxlength="100" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter username for account</span>
                                                     </div>
                                                 </div>
@@ -86,7 +86,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Email Id</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="emailId" maxlength="100" cssClass="form-control"/>                                       
+                                                        <form:input path="emailId" maxlength="100" cssClass="form-control"  readonly="true"/>                                       
                                                         <span class="help-block">Please enter email id</span>
                                                     </div>
                                                 </div>
@@ -96,7 +96,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Mobile No</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="mobileNumber" maxlength="10" cssClass="form-control"/>                                       
+                                                        <form:input path="mobileNumber" maxlength="10" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter mobile no</span>
                                                     </div>
                                                 </div>
@@ -108,7 +108,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label">Aadhar Id</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="aadharId" maxlength="16" cssClass="form-control" value=""/>                                       
+                                                        <form:input path="aadharId" maxlength="16" cssClass="form-control" value="" readonly="true"/>                                       
                                                         <span class="help-block">Please enter aadhar id</span>
                                                     </div>
                                                 </div>
@@ -118,7 +118,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label">PAN</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="pan" maxlength="10" cssClass="form-control"/>                                       
+                                                        <form:input path="pan" maxlength="10" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter pan</span>
                                                     </div>
                                                 </div>
@@ -137,7 +137,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Address 1</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:textarea path="addLine1" rows="1" cssClass="form-control"/>                                       
+                                                        <form:textarea path="addLine1" rows="1" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter address line 1</span>
                                                     </div>
                                                 </div>
@@ -146,7 +146,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Address 2</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:textarea path="addLine2" rows="1" cssClass="form-control"/>                                       
+                                                        <form:textarea path="addLine2" rows="1" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter address line 2</span>
                                                     </div>
                                                 </div>
@@ -158,7 +158,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">City</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="city" maxlength="50" cssClass="form-control"/>                                       
+                                                        <form:input path="city" maxlength="50" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter city</span>
                                                     </div>
                                                 </div>
@@ -167,7 +167,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">State</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="state" maxlength="50" cssClass="form-control"/>                                       
+                                                        <form:input path="state" maxlength="50" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter state</span>
                                                     </div>
                                                 </div>
@@ -178,7 +178,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Pincode</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="pin"  maxlength="6" cssClass="form-control"/>                                       
+                                                        <form:input path="pin"  maxlength="6" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter pincode</span>
                                                     </div>
                                                 </div>
@@ -212,7 +212,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Document Desc</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="kycData[0].documentDesc" cssClass="form-control"/>                                       
+                                                        <form:input path="kycData[0].documentDesc" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter document desc</span>
                                                     </div>
                                                 </div>
@@ -238,7 +238,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Document Desc</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="kycData[1].documentDesc" cssClass="form-control"/>                                       
+                                                        <form:input path="kycData[1].documentDesc" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter document desc</span>
                                                     </div>
                                                 </div>
@@ -266,7 +266,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Document Desc</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="kycData[2].documentDesc" cssClass="form-control"/>                                       
+                                                        <form:input path="kycData[2].documentDesc" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter document desc</span>
                                                     </div>
                                                 </div>
@@ -293,7 +293,7 @@
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">Document Desc</label>
                                                     <div class="col-md-8 col-xs-12">
-                                                        <form:input path="kycData[3].documentDesc" cssClass="form-control"/>                                       
+                                                        <form:input path="kycData[3].documentDesc" cssClass="form-control" readonly="true"/>                                       
                                                         <span class="help-block">Please enter document desc</span>
                                                     </div>
                                                 </div>
@@ -305,7 +305,7 @@
                                         <div class="pull-right" data-user-id="${registration.userId}">
                                             <button type="button" class="btn btn-success btnFun"><spring:message code="button.Activate"/></button>
                                             <button type="button" class="btn btn-info btnFun"><spring:message code="button.Deactivate"/></button>
-                                            <button type="button" name="_cancel" class="btn btn-danger" onclick="location.href = '../customer/customerList?msg=Action canceled'"><spring:message code="button.Cancel"/></button>
+                                            <button type="button" name="_cancel" class="btn btn-danger" onclick="location.href = '../home/customerList?msg=Action canceled'"><spring:message code="button.Cancel"/></button>
                                         </div>
                                     </div>
 
@@ -335,7 +335,7 @@
     <script type='text/javascript' src='../js/jquery-validation/jquery.validate.js'></script>
     <!-- END THIS PAGE PLUGINS-->        
     <script type="text/javascript">
-                                                $(".datepicker").datepicker({format: 'dd-mm-yyyy', autoclose: true});
+//                                                $(".datepicker").datepicker({format: 'dd-mm-yyyy', autoclose: true});
                                                 $(document).ready(function () {
                                                     $.validator.addMethod(
                                                             "checkEmail",
@@ -443,10 +443,10 @@
                                                     if ($(this).text() == 'Activate') {
                                                         $('#active').val("A");
                                                     } else {
-                                                        $('#active').val("N");
+                                                        $('#active').val("D");
                                                     }
                                                     $('#userId').val($(this).parent().data("userId"));
-                                                    $('#form3').prop('action', '../customer/confirmCustomer');
+                                                    $('#form3').prop('action', '../home/confirmCustomer');
                                                     $('#form3').submit();
                                                 });
 

@@ -11,10 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-/**
- *
- * @author hp
- */
 public interface BeneficiaryDao extends JpaRepository<Beneficiaries, Long> {
 
     @Query("select b from Beneficiaries b left join b.owner a where a.acctId=:acctId")

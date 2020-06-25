@@ -5,6 +5,8 @@
  */
 package com.dhanjyothi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +30,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ServiceRequest {
 
     @Id
@@ -35,10 +38,19 @@ public class ServiceRequest {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long reqId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "acct_id")
+    @JsonIgnore
     private Account owner;
 
     @Column(name = "req_desc", length = 255, nullable = false)
     private String reqDesc;
+
+    public ServiceRequest(String reqDesc) {
+        this.reqDesc = reqDesc;
+    }
+
+    public ServiceRequest() {
+    }
+
 }

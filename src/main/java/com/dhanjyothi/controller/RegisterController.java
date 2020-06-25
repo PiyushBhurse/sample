@@ -1,5 +1,6 @@
 package com.dhanjyothi.controller;
 
+import com.dhanjyothi.model.KYC;
 import com.dhanjyothi.model.User;
 import com.dhanjyothi.service.AccountService;
 import com.dhanjyothi.service.LoginService;
@@ -43,16 +44,27 @@ public class RegisterController {
     @RequestMapping(value = "/registerCustomer/save", method = RequestMethod.POST)
     public String saveRegister(@ModelAttribute("registration") User user, BindingResult bindingResult, ModelMap model) {
         try {
+            if (user.getKycData().size() < 4) {
+                return "home/signup?error=Upload All KYC Documents";
+            } else {
+                for (KYC kyc : user.getKycData()) {
+                    if (kyc.getDocumentDesc().trim().length() < 1 || kyc.getFile().isEmpty()) {
+                        model.addAttribute("registration", user);
+                        return "redirect:../home/signup?error=Upload all KYC files with desc";
+                    }
+
+                }
+            }
             long saveUser = this.loginService.saveUser(user);
             return "redirect:../home/login?msg=Account Created Successfully";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("registration", user);
-            return "home/signup";
+            return "home/signup?error=" + e.getMessage();
         }
     }
 
-    @RequestMapping(value = "/customer/customerList")//getAll
+    @RequestMapping(value = "/home/customerList")//getAll
     public String getAllUsers(HttpServletRequest request, ModelMap model) {
         String userStatusString = (ServletRequestUtils.getStringParameter(request, "userStatus", "u")).trim(); //u-undefined n-new a-active
         List<User> userList = this.accountService.getUserList(userStatusString.toUpperCase().charAt(0));
@@ -62,19 +74,19 @@ public class RegisterController {
         return "customer/customerList";
     }
 
-    @RequestMapping(value = "/customer/activateCustomer", method = RequestMethod.POST)
+    @RequestMapping(value = "/home/activateCustomer", method = RequestMethod.POST)
     public String showActivateCustomer(HttpServletRequest request, ModelMap model) {
         long userId = ServletRequestUtils.getLongParameter(request, "userId", 0);
         model.addAttribute("registration", this.loginService.getUserByUserId(userId));
         return "customer/activateNewCustomer";
     }
 
-    @RequestMapping(value = "/customer/confirmCustomer", method = RequestMethod.POST)
+    @RequestMapping(value = "/home/confirmCustomer", method = RequestMethod.POST)
     public String activateCustomer(HttpServletRequest request, ModelMap model) {
         long userId = ServletRequestUtils.getLongParameter(request, "userId", 0);
         String active = ServletRequestUtils.getStringParameter(request, "active", "");
         this.loginService.updateCustomerUserStatus(userId, active.charAt(0));
-        return "redirect:../customer/customerList";
+        return "redirect:../home/customerList";
     }
 
 }

@@ -1,5 +1,7 @@
 package com.dhanjyothi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +21,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Beneficiaries {
 
     @Id
@@ -46,5 +49,6 @@ public class Beneficiaries {
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "acct_id")
+    @JsonIgnore
     private Account owner;
 }

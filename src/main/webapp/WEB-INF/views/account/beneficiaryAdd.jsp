@@ -17,7 +17,7 @@
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Add Beneficiary and Fund Transfer</a></li>
+                    <li><a href="#">Add Beneficiary</a></li>
                 </ul>
                 <!-- END BREADCRUMB --> 
                 <div class="page-content-wrap" >
@@ -145,47 +145,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel panel-default" style="background: #ffffffde!important;">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Transfer Funds</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-12 scrollable">
-                                                <table class="table datatable table-bordered" >
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Account No</th>
-                                                            <th>Account Type</th>
-                                                            <th>Term Amount</th>
-                                                            <th>Tenure</th>
-                                                            <th>Interest</th>
-                                                            <th>Maturity Amount</th>
-                                                            <th>Created Date</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:forEach items="${termAccount}" var="ta">
-                                                            <tr>
-                                                                <td>${ta.acctId}</td>
-                                                                <td>${ta.acctType}</td>
-                                                                <td>${ta.depositeAmount}</td>
-                                                                <td>${ta.depositeTenure}</td>
-                                                                <td>${ta.intRate}</td>
-                                                                <td>${ta.maturityAmt}</td>
-                                                                <td><fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ta.accountCreatedDate}"/></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -355,6 +314,7 @@
             <!-- END THIS PAGE PLUGINS-->        
             <script type="text/javascript">
                                                                 $("#submitBtn").prop('disabled', true);
+                                                                $(".datepicker").datepicker({format: 'dd-mm-yyyy', autoclose: true});
                                                                 $('.table').dataTable({
                                                                     "order": []
                                                                 });
@@ -492,7 +452,7 @@
                                                                                 var table = $('#transTable').DataTable();
                                                                                 table.clear().draw();
                                                                                 for (var i = 0; i < json.length; i++) {
-                                                                                    var tds = [json[i].tranId, json[i].tranDesc, json[i].tranType, json[i].tranAmt, $.format.date(json[i].tranDtTime, 'dd-MM-yyyy HH:mm'), ((json[i].beneficiaries == null) ? '-' : 'beni')];
+                                                                                    var tds = [json[i].tranId, json[i].tranDesc, json[i].tranType, json[i].tranAmt, $.format.date(json[i].tranDtTime, 'dd-MM-yyyy HH:mm'), ((json[i].beneficiaries == null) ? '-' : ("to acc#"+json[i].beneficiaries.benAccNum+" of "+json[i].beneficiaries.benName))];
                                                                                     table.row.add(tds).draw();
                                                                                 }
                                                                             }

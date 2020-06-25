@@ -35,6 +35,7 @@
                                         </div>
 
                                         <div class="row" style="margin-top: 5%">
+                                            <%@include file="../common/message.jsp"%>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="req col-md-3 control-label">First Name</label>
@@ -63,6 +64,7 @@
                                                     <label class="req col-md-3 control-label">Username</label>
                                                     <div class="col-md-8 col-xs-12">
                                                         <form:input path="username" maxlength="100" cssClass="form-control"/>                                       
+                                                        <span id="userNameSpan" style="color: red;display: none;" ></span>
                                                         <span class="help-block">Please enter username for account</span>
                                                     </div>
                                                 </div>
@@ -322,7 +324,7 @@
 
                                     <div class="panel-footer">
                                         <div class="pull-right">
-                                            <button type="submit" class="btn btn-success"><spring:message code="button.Submit"/></button>
+                                            <button id="submitBtn" type="submit" class="btn btn-success"><spring:message code="button.Submit"/></button>
                                             <button type="button" name="_cancel" class="btn btn-danger" onclick="location.href = '../home/login?msg=Action canceled'"><spring:message code="button.Cancel"/></button>
                                         </div>
                                     </div>
@@ -450,6 +452,38 @@
                                                     }
                                                 });
 
+                                                $("#username").change(function () {
+                                                    var uval = $("#username").val();
+                                                    $.ajax({
+                                                        data: ({
+                                                            'username': uval
+                                                        }),
+                                                        url: "../ajax/isUserNameExists",
+                                                        dataType: "json",
+                                                        success: function (json) {
+                                                            if (json == true) {
+                                                                $("#userNameSpan").html("Username already taken <br> try with <i>" + getRandomUserNames(uval) + "</i>");
+                                                                $("#userNameSpan").show();
+                                                                $("#submitBtn").prop('disabled', true);
+                                                            } else {
+                                                                $("#userNameSpan").text("");
+                                                                $("#userNameSpan").hide();
+                                                                $("#submitBtn").prop('disabled', false);
+                                                            }
+                                                        }
+                                                    });
+                                                });
+
+                                                function getRandomUserNames(username) {
+                                                    var fname = $("#firstName").val().toLowerCase();
+                                                    var lname = $("#lastName").val().toLowerCase();
+                                                    var sampleUsernameString = "";
+                                                    if (fname != "" && lname != "") {
+                                                        sampleUsernameString += fname + lname.charAt(0) + Math.floor(Math.random() * 101) + " / " + lname + fname.charAt(0) + Math.floor(Math.random() * 101) + " / " + fname + lname + Math.floor(Math.random() * 101) + " / " + fname + lname + Math.floor(Math.random() * 101) + " / " + lname + fname + Math.floor(Math.random() * 101) + " / ";
+                                                    }
+                                                    return  sampleUsernameString += username + Math.floor(Math.random() * 101) + " / " + username + Math.floor(Math.random() * 1001)
+
+                                                }
     </script>
 </body>
 </html>

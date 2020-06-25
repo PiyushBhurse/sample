@@ -27,32 +27,11 @@ public class LoginController {
         return "home/login";
     }
 
-    @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public String validateUser(@ModelAttribute("user") User user, HttpServletRequest request, Model model) {
-        return null;
-    }
-
-    @RequestMapping("/accsummary")
-    public String loadAccSummary(HttpServletRequest request, Model model) {
-        return null;
-    }
-
-    @RequestMapping("/adduser")
-    public String addUser(HttpServletRequest request, Model model) {
-        return null;
-    }
-
-    @GetMapping("/logout")
-    public String logoutPage(HttpServletRequest request) {
-
-        return null;
-    }
-
     @RequestMapping(value = "/home/index")
     public String indexPage(HttpServletRequest request) {
         CustomUserDetails name = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Collection<? extends GrantedAuthority> authorities = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
-        return (authorities.contains(new SimpleGrantedAuthority("C"))) ? "redirect:../account/accountSummary" : "redirect:../customer/customerList";
+        return (authorities.contains(new SimpleGrantedAuthority("C"))) ? "redirect:../account/accountSummary" : "redirect:../home/customerList";
     }
 
 }

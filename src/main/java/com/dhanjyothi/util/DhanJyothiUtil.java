@@ -1,20 +1,17 @@
 package com.dhanjyothi.util;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.dhanjyothi.model.Beneficiaries;
 
 @Component
 public class DhanJyothiUtil {
 
     public static Map<Integer, String> getTenureDetails() {
-        Map<Integer, String> map = new LinkedHashMap<Integer, String>();
+        Map<Integer, String> map = new LinkedHashMap<>();
         map.put(1, "One Year");
         map.put(2, "Two Year");
         map.put(3, "Three Year");
@@ -28,17 +25,8 @@ public class DhanJyothiUtil {
         return date;
     }
 
-    public Date getTermMaturityDate(int year) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.YEAR, year);
-        Date maturityDate = c.getTime();
-        return maturityDate;
-    }
-
     public static double calculateMaturityAmount(long p, int t, float r) {
         double ciAmt = p * (Math.pow((1 + r / 100), t));
-        double cinterest = ciAmt - p;
         ciAmt = (double) Math.round(ciAmt * 100) / 100;
         return ciAmt;
     }
@@ -107,24 +95,11 @@ public class DhanJyothiUtil {
         return interest;
     }
 
-    public long getAccountBalance(long balance, long termAmount) {
-        return 1L;
-    }
-
-    public long addAccountBalance(long balance, long termAmount) {
-        return 1L;
-    }
-
-    public Beneficiaries getBeneficiary(long id, List<Beneficiaries> beneficiaries) {
-
-        return null;
-    }
-
-    public Map<Integer, String> getChequeRequestList() {
-        Map<Integer, String> map = new LinkedHashMap<Integer, String>();
-        map.put(20, "100");
-        map.put(50, "200");
-        map.put(100, "300");
+    public static Map<Integer, String> getChequeRequestList() {
+        Map<Integer, String> map = new LinkedHashMap<>();
+        map.put(20, "100 Leaves");//cheque leaves vs charges
+        map.put(50, "200 Leaves");
+        map.put(100, "300 Leaves");
         return map;
     }
 

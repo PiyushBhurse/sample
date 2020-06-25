@@ -16,10 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-/**
- *
- * @author hp
- */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -53,16 +49,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home/index").permitAll()
                 .antMatchers("/ajax/**").permitAll()
                 .antMatchers("/h2console/**").permitAll()
-                .antMatchers("/customer/customerList**").hasAnyAuthority("M")
-                .antMatchers("/customer/activateCustomer**").hasAnyAuthority("M")
-                .antMatchers("/customer/confirmCustomer**").hasAnyAuthority("M")
+                .antMatchers("/home/customerList**").hasAnyAuthority("M")
+                .antMatchers("/home/activateCustomer**").hasAnyAuthority("M")
+                .antMatchers("/home/confirmCustomer**").hasAnyAuthority("M")
                 .antMatchers("/download/kyc**").hasAnyAuthority("M")
                 .antMatchers("/account/accountSummary**").hasAnyAuthority("C")
                 .antMatchers("/account/createSavingsAccount**").hasAnyAuthority("C")
                 .antMatchers("/account/openTermAccount**").hasAnyAuthority("C")
                 .antMatchers("/account/createTermAccount**").hasAnyAuthority("C")
-                .antMatchers("/account/beneficiaryAndTransfer**").hasAnyAuthority("C")
+                .antMatchers("/account/beneficiaryAdd**").hasAnyAuthority("C")
                 .antMatchers("/account/addBeneficiary**").hasAnyAuthority("C")
+                .antMatchers("/account/transferFunds**").hasAnyAuthority("C")
                 .antMatchers("/account/fundTransfer**").hasAnyAuthority("C")
                 .anyRequest().denyAll()
                 .and()

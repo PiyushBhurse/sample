@@ -5,9 +5,9 @@
  */
 package com.dhanjyothi.dao;
 
-import com.dhanjyothi.model.KYC;
+import com.dhanjyothi.model.ServiceRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface KYCDao extends JpaRepository<KYC, Long> {
-
+public interface ServiceRequestDao extends JpaRepository<ServiceRequest, Long>{
+    
 }
