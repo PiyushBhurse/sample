@@ -249,8 +249,6 @@ public class AccountServiceImpl implements AccountService {
 		for (Map.Entry<Integer, String> entry : chequeRequestList.entrySet()) {
 			if (entry.getValue().trim().equals(pageDesc.trim())) {
 				return entry.getKey();
-			}else {
-				return 0;
 			}
 		}
 		return 0;
