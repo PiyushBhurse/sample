@@ -5,32 +5,29 @@
  */
 package com.dhanjyothi.security.config;
 
-import com.dhanjyothi.model.User;
-import com.dhanjyothi.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author hp
- */
+import com.dhanjyothi.model.User;
+import com.dhanjyothi.service.LoginService;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private LoginService loginService;
+	@Autowired
+	private LoginService loginService;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.loginService.getUserByUserName(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Could not find user");
-        }
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
-        return customUserDetails;
-    }
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = this.loginService.getUserByUserName(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("Could not find user");
+		}
+		CustomUserDetails customUserDetails = new CustomUserDetails(user);
+		return customUserDetails;
+	}
 
 }

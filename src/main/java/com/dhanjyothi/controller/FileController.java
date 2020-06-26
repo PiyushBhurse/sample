@@ -1,44 +1,41 @@
 package com.dhanjyothi.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.dhanjyothi.util.GlobalConstants;
+
+@RestController
 public class FileController {
 
-    @GetMapping("/showuploadpage")
-    public ModelAndView showUploadPage() {
+	@RequestMapping(value = "/download/kyc")
+	public void fileDownloadPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String fileName = ServletRequestUtils.getStringParameter(request, "filePath", "");
+		File file = new File(GlobalConstants.FILE_LOCATION + fileName);
+		if (file.exists()) {
 
-        return new ModelAndView("");
-    }
+			String mimeType = URLConnection.guessContentTypeFromName("");
+			if (mimeType == null) {
+				mimeType = "application/octet-stream";
+			}
+			response.setContentType(mimeType);
+			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+			response.setContentLength((int) file.length());
+			InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
 
-    @PostMapping(value = "/doUpload")
-    public ModelAndView saveFileUpload(HttpServletRequest request, @RequestParam CommonsMultipartFile[] fileUpload)
-            throws Exception {
-
-        return new ModelAndView("");
-    }
-
-    @GetMapping("/viewall")
-    public ModelAndView viewAllFiles() {
-
-        return new ModelAndView("");
-    }
-
-    @GetMapping("/doDownload/{fileName}")
-    public ModelAndView downloadFile(@PathVariable("fileName") String fileName, HttpServletResponse response)
-            throws IOException {
-
-        return new ModelAndView("");
-
-    }
-
+		}
+	}
 }

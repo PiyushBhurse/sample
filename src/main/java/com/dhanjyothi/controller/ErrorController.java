@@ -6,14 +6,15 @@
 package com.dhanjyothi.controller;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ErrorController {
 
-    @GetMapping("/errors/accessDenied")
-    public String accessDeniedPage(HttpServletRequest request) {
-        return "errors/accessDenied";
-    }
+	@GetMapping("/errors/accessDenied")
+	public String accessDeniedPage(HttpServletRequest request) {
+		return "errors/accessDenied";
+	}
 }

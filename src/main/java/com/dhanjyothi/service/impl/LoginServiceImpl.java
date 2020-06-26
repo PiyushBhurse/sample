@@ -1,6 +1,5 @@
 package com.dhanjyothi.service.impl;
 
-import com.dhanjyothi.dao.KYCDao;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private LoginDao loginDao;
-
-    @Autowired
-    private KYCDao kycdao;
 
     String saveLocation = "D:/dhanjyothiDocs/";
     private static Integer count = 0;
@@ -66,11 +62,6 @@ public class LoginServiceImpl implements LoginService {
         } else {
             return null;
         }
-    }
-
-    @Override
-    public long getUserCount() {
-        return this.loginDao.count();
     }
 
     @Override

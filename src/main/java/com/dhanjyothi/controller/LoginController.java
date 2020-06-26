@@ -1,37 +1,36 @@
 package com.dhanjyothi.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import com.dhanjyothi.model.User;
-import com.dhanjyothi.security.config.CustomUserDetails;
-import com.dhanjyothi.service.LoginService;
 import java.util.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.dhanjyothi.security.config.CustomUserDetails;
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
+	@RequestMapping(value = "/home/login", method = RequestMethod.GET)
+	public String showRegister(HttpServletRequest request, ModelMap model) {
 
-    @RequestMapping(value = "/home/login", method = RequestMethod.GET)
-    public String showRegister() {
-        return "home/login";
-    }
+		model.addAttribute("msg", ServletRequestUtils.getStringParameter(request, "msg", ""));
+		return "home/login";
+	}
 
-    @RequestMapping(value = "/home/index")
-    public String indexPage(HttpServletRequest request) {
-        CustomUserDetails name = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Collection<? extends GrantedAuthority> authorities = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
-        return (authorities.contains(new SimpleGrantedAuthority("C"))) ? "redirect:../account/accountSummary" : "redirect:../home/customerList";
-    }
+	@RequestMapping(value = "/home/index")
+	public String indexPage(HttpServletRequest request) {
+		Collection<? extends GrantedAuthority> authorities = ((CustomUserDetails) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal()).getAuthorities();
+		return (authorities.contains(new SimpleGrantedAuthority("C"))) ? "redirect:../account/accountSummary"
+				: "redirect:../home/customerList";
+	}
 
 }

@@ -7,7 +7,7 @@ package com.dhanjyothi.util;
 
 public class GlobalConstants {
 
-    public final static String FILE_LOCATION = "D:/dhanjyothiDocs/";
-    public static double OPENING_AMT = 10000;
+	public final static String FILE_LOCATION = "D:/dhanjyothiDocs/";
+	public static double OPENING_AMT = 10000;
 
 }

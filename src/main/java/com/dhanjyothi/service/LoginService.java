@@ -4,13 +4,11 @@ import com.dhanjyothi.model.User;
 
 public interface LoginService {
 
-    public long saveUser(User user);
+	public long saveUser(User user);
 
-    public User getUserByUserId(long userId);
+	public User getUserByUserId(long userId);
 
-    public long getUserCount();
+	public User getUserByUserName(String userName);
 
-    public User getUserByUserName(String userName);
-
-    public void updateCustomerUserStatus(long userId, char userStatus);
+	public void updateCustomerUserStatus(long userId, char userStatus);
 }

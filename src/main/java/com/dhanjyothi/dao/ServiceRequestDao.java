@@ -5,9 +5,10 @@
  */
 package com.dhanjyothi.dao;
 
-import com.dhanjyothi.model.ServiceRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ServiceRequestDao extends JpaRepository<ServiceRequest, Long>{
-    
+import com.dhanjyothi.model.ServiceRequest;
+
+public interface ServiceRequestDao extends JpaRepository<ServiceRequest, Long> {
+
 }

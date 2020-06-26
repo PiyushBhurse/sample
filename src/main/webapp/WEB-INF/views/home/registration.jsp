@@ -11,33 +11,30 @@
 <body>
 	<!-- START PAGE CONTAINER -->
 	<div class="page-navigation-toggled page-container-wide">
-		<%@include file="../common/topbar.jsp"%>
 		<!-- PAGE CONTENT -->
 		<div class="page-content">
 			<!-- START BREADCRUMB -->
 			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Customer List</a></li>
-				<li><a href="#">Activate Customer</a></li>
+				<li><a href="#">Login</a></li>
+				<li><a href="#">Register Yourself</a></li>
 			</ul>
 			<!-- END BREADCRUMB -->
 			<div class="page-content-wrap">
-				<%@include file="../common/message.jsp"%>
 				<!-- PAGE TITLE -->
 				<div class="">
 					<div class="page-title">
 						<h2>
 							<span class="fa fa-arrow-circle-o-left"
-								onclick="location.href = '../home/index'"></span>&nbsp;Activate
-							Customer Account
+								onclick="location.href = '../home/login'"></span>&nbsp;Register
+							Yourself
 						</h2>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
 							<form:form cssClass="form-horizontal"
-								action="#?${_csrf.parameterName}=${_csrf.token}"
-								modelAttribute="registration" name="form1" id="form1"
-								enctype="multipart/form-data">
+								action="../registerCustomer/save?${_csrf.parameterName}=${_csrf.token}"
+								modelAttribute="registration" method="POST" name="form1"
+								id="form1" enctype="multipart/form-data">
 								<!--Customer details-->
 								<div class="panel panel-default">
 									<div class="panel-heading">
@@ -47,12 +44,13 @@
 									</div>
 
 									<div class="row" style="margin-top: 5%">
+										<%@include file="../common/message.jsp"%>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="req col-md-3 control-label">First Name</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="firstName" maxlength="100"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter first name</span>
 												</div>
 											</div>
@@ -63,7 +61,7 @@
 												<label class="req col-md-3 control-label">Last Name</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="lastName" maxlength="100"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter last name</span>
 												</div>
 											</div>
@@ -78,7 +76,8 @@
 												<label class="req col-md-3 control-label">Username</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="username" maxlength="100"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
+													<span id="userNameSpan" style="color: red; display: none;"></span>
 													<span class="help-block">Please enter username for
 														account</span>
 												</div>
@@ -104,7 +103,7 @@
 												<label class="req col-md-3 control-label">Email Id</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="emailId" maxlength="100"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter email id</span>
 												</div>
 											</div>
@@ -115,7 +114,7 @@
 												<label class="req col-md-3 control-label">Mobile No</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="mobileNumber" maxlength="10"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter mobile no</span>
 												</div>
 											</div>
@@ -129,7 +128,7 @@
 												<label class="col-md-3 control-label">Aadhar Id</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="aadharId" maxlength="16"
-														cssClass="form-control" value="" readonly="true" />
+														cssClass="form-control" value="" />
 													<span class="help-block">Please enter aadhar id</span>
 												</div>
 											</div>
@@ -139,9 +138,36 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label">PAN</label>
 												<div class="col-md-8 col-xs-12">
-													<form:input path="pan" maxlength="10"
-														cssClass="form-control" readonly="true" />
+													<form:input path="pan" id="pan" maxlength="10"
+														cssClass="form-control" />
 													<span class="help-block">Please enter pan</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<br />
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="req col-md-3 control-label">Password</label>
+												<div class="col-md-8 col-xs-12">
+													<form:password path="password" cssClass="form-control" />
+													<form:hidden path="userRole" cssClass="form-control"
+														value="C" />
+													<form:hidden path="userStatus" cssClass="form-control"
+														value="N" />
+													<span class="help-block">Please enter password</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="req col-md-3 control-label">Confirm
+													Password</label>
+												<div class="col-md-8 col-xs-12">
+													<input type="text" id="confPass" name="confPass"
+														class="form-control" /> <span class="help-block">Please
+														enter your password again</span>
 												</div>
 											</div>
 										</div>
@@ -164,7 +190,7 @@
 												<label class="req col-md-3 control-label">Address 1</label>
 												<div class="col-md-8 col-xs-12">
 													<form:textarea path="addLine1" rows="1"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter address line 1</span>
 												</div>
 											</div>
@@ -174,7 +200,7 @@
 												<label class="req col-md-3 control-label">Address 2</label>
 												<div class="col-md-8 col-xs-12">
 													<form:textarea path="addLine2" rows="1"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter address line 2</span>
 												</div>
 											</div>
@@ -188,7 +214,7 @@
 												<label class="req col-md-3 control-label">City</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="city" maxlength="50"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter city</span>
 												</div>
 											</div>
@@ -198,7 +224,7 @@
 												<label class="req col-md-3 control-label">State</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="state" maxlength="50"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter state</span>
 												</div>
 											</div>
@@ -211,7 +237,7 @@
 												<label class="req col-md-3 control-label">Pincode</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="pin" maxlength="6"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter pincode</span>
 												</div>
 											</div>
@@ -239,16 +265,15 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="req col-md-3 control-label" data-er="Identity">Download
+												<label class="req col-md-3 control-label" data-er="Identity">Upload
 													Document</label>
-												<div class="col-md-8 col-xs-12"
-													data-file-name="${registration.kycData[0].documentLoc}">
-													<button type="button" class="btn btn-warning viewDoc">View
-														Document</button>
+												<div class="col-md-8 col-xs-12">
+													<form:input type="file" path="kycData[0].file"
+														class="form-control" />
 													<form:hidden path="kycData[0].kycType"
 														cssClass="form-control" value="B" />
-													<span class="help-block">Click to view the uploaded
-														document</span>
+													<span class="help-block">Please select picture of
+														size less than or equal to 1MB(png,jpg,jpeg)</span>
 												</div>
 											</div>
 										</div>
@@ -258,7 +283,7 @@
 													Desc</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="kycData[0].documentDesc"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter document desc</span>
 												</div>
 											</div>
@@ -276,16 +301,15 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="req col-md-3 control-label" data-er="Identity">Download
+												<label class="req col-md-3 control-label" data-er="Identity">Upload
 													Document</label>
-												<div class="col-md-8 col-xs-12"
-													data-file-name="${registration.kycData[1].documentLoc}">
-													<button type="button" class="btn btn-warning viewDoc">View
-														Document</button>
+												<div class="col-md-8 col-xs-12">
+													<form:input type="file" path="kycData[1].file"
+														class="form-control" />
 													<form:hidden path="kycData[1].kycType"
 														cssClass="form-control" value="A" />
-													<span class="help-block">Click to view the uploaded
-														document</span>
+													<span class="help-block">Please select picture of
+														size less than or equal to 1MB(png,jpg,jpeg)</span>
 												</div>
 											</div>
 										</div>
@@ -295,7 +319,7 @@
 													Desc</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="kycData[1].documentDesc"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter document desc</span>
 												</div>
 											</div>
@@ -315,16 +339,15 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="req col-md-3 control-label" data-er="Identity">Download
+												<label class="req col-md-3 control-label" data-er="Identity">Upload
 													Document</label>
-												<div class="col-md-8 col-xs-12"
-													data-file-name="${registration.kycData[2].documentLoc}">
-													<button type="button" class="btn btn-warning viewDoc">View
-														Document</button>
+												<div class="col-md-8 col-xs-12">
+													<form:input type="file" path="kycData[2].file"
+														class="form-control" />
 													<form:hidden path="kycData[2].kycType"
 														cssClass="form-control" value="D" />
-													<span class="help-block">Click to view the uploaded
-														document</span>
+													<span class="help-block">Please select picture of
+														size less than or equal to 1MB(png,jpg,jpeg)</span>
 												</div>
 											</div>
 										</div>
@@ -334,7 +357,7 @@
 													Desc</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="kycData[2].documentDesc"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter document desc</span>
 												</div>
 											</div>
@@ -353,16 +376,15 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="req col-md-3 control-label" data-er="Identity">Download
+												<label class="req col-md-3 control-label" data-er="Identity">Upload
 													Document</label>
-												<div class="col-md-8 col-xs-12"
-													data-file-name="${registration.kycData[3].documentLoc}">
-													<button type="button" class="btn btn-warning viewDoc">View
-														Document</button>
+												<div class="col-md-8 col-xs-12">
+													<form:input type="file" path="kycData[3].file"
+														class="form-control" />
 													<form:hidden path="kycData[3].kycType"
 														cssClass="form-control" value="P" />
-													<span class="help-block">Click to view the uploaded
-														document</span>
+													<span class="help-block">Please select picture of
+														size less than or equal to 1MB(png,jpg,jpeg)</span>
 												</div>
 											</div>
 										</div>
@@ -372,7 +394,7 @@
 													Desc</label>
 												<div class="col-md-8 col-xs-12">
 													<form:input path="kycData[3].documentDesc"
-														cssClass="form-control" readonly="true" />
+														cssClass="form-control" />
 													<span class="help-block">Please enter document desc</span>
 												</div>
 											</div>
@@ -382,15 +404,12 @@
 								</div>
 
 								<div class="panel-footer">
-									<div class="pull-right" data-user-id="${registration.userId}">
-										<button type="button" class="btn btn-success btnFun">
-											<spring:message code="button.Activate" />
-										</button>
-										<button type="button" class="btn btn-info btnFun">
-											<spring:message code="button.Deactivate" />
+									<div class="pull-right">
+										<button id="submitBtn" type="submit" class="btn btn-success">
+											<spring:message code="button.Submit" />
 										</button>
 										<button type="button" name="_cancel" class="btn btn-danger"
-											onclick="location.href = '../home/customerList?msg=Action canceled'">
+											onclick="location.href = '../home/login?msg=Action canceled'">
 											<spring:message code="button.Cancel" />
 										</button>
 									</div>
@@ -404,16 +423,6 @@
 			<!-- END PAGE TITLE -->
 		</div>
 		<!-- START PAGE CONTAINER -->
-		<form name="form2" id="form2" action="" method="post">
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" /> <input type="hidden" id="filePath"
-				name="filePath" />
-		</form>
-		<form name="form3" id="form3" action="" method="post">
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" /> <input type="hidden" id="active"
-				name="active" /> <input type="hidden" id="userId" name="userId" />
-		</form>
 	</div>
 	</div>
 	<%@include file="../common/script.jsp"%>
@@ -426,7 +435,10 @@
 		src='../js/jquery-validation/jquery.validate.js'></script>
 	<!-- END THIS PAGE PLUGINS-->
 	<script type="text/javascript">
-		//                                                $(".datepicker").datepicker({format: 'dd-mm-yyyy', autoclose: true});
+		$(".datepicker").datepicker({
+			format : 'dd-mm-yyyy',
+			autoclose : true
+		});
 		$(document)
 				.ready(
 						function() {
@@ -489,6 +501,17 @@
 				aadharId : {
 					number : true
 				},
+				password : {
+					required : true,
+					minlength : 8,
+					maxlength : 15
+				},
+				confPass : {
+					equalTo : "#password",
+					required : true,
+					minlength : 8,
+					maxlength : 15
+				},
 				addLine1 : {
 					required : true
 				},
@@ -506,11 +529,13 @@
 					minlength : 6
 				},
 				pan : {
-					minlength : 10
+					minlength : 10,
+					required : '#aadharId:blank'
 				},
-				aadhar : {
+				aadharId : {
 					minlength : 16,
-					number : true
+					number : true,
+					required :'#pan:blank'
 				}
 			},
 			errorPlacement : function(error, element) {
@@ -523,21 +548,51 @@
 			}
 		});
 
-		$(".viewDoc").click(function() {
-			$('#filePath').val($(this).parent().data("file-name"));
-			$('#form2').prop('action', '../download/kyc');
-			$('#form2').submit();
-		});
-		$(".btnFun").click(function() {
-			if ($(this).text().trim() == 'Activate') {
-				$('#active').val("A");
-			} else {
-				$('#active').val("D");
+		$("#username").change(
+				function() {
+					var uval = $("#username").val();
+					$.ajax({
+						data : ({
+							'username' : uval
+						}),
+						url : "../ajax/isUserNameExists",
+						dataType : "json",
+						success : function(json) {
+							if (json == true) {
+								$("#userNameSpan").html(
+										"Username already taken <br> try with <i>"
+												+ getRandomUserNames(uval)
+												+ "</i>");
+								$("#userNameSpan").show();
+								$("#submitBtn").prop('disabled', true);
+							} else {
+								$("#userNameSpan").text("");
+								$("#userNameSpan").hide();
+								$("#submitBtn").prop('disabled', false);
+							}
+						}
+					});
+				});
+
+		function getRandomUserNames(username) {
+			var fname = $("#firstName").val().toLowerCase();
+			var lname = $("#lastName").val().toLowerCase();
+			var sampleUsernameString = "";
+			if (fname != "" && lname != "") {
+				sampleUsernameString += fname + lname.charAt(0)
+						+ Math.floor(Math.random() * 101) + " / " + lname
+						+ fname.charAt(0) + Math.floor(Math.random() * 101)
+						+ " / " + fname + lname
+						+ Math.floor(Math.random() * 101) + " / " + fname
+						+ lname + Math.floor(Math.random() * 101) + " / "
+						+ lname + fname + Math.floor(Math.random() * 101)
+						+ " / ";
 			}
-			$('#userId').val($(this).parent().data("userId"));
-			$('#form3').prop('action', '../home/confirmCustomer');
-			$('#form3').submit();
-		});
+			return sampleUsernameString += username
+					+ Math.floor(Math.random() * 101) + " / " + username
+					+ Math.floor(Math.random() * 1001)
+
+		}
 	</script>
 </body>
 </html>
